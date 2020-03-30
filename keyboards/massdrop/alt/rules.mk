@@ -12,7 +12,7 @@ CUSTOM_MATRIX = yes
 #   comment out to disable the options.
 #
 BOOTMAGIC_ENABLE = no       # Virtual DIP switch configuration
-MOUSEKEY_ENABLE = no        # Mouse keys
+MOUSEKEY_ENABLE = yes       # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
@@ -30,9 +30,15 @@ FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 VIRTSER_ENABLE = no         # USB Serial Driver
 RAW_ENABLE = no             # Raw device
-AUTO_SHIFT_ENABLE = no      # Auto Shift
+AUTO_SHIFT_ENABLE = yes     # Auto Shift
+KEY_LOCK_ENABLE = yes       # Key lock
+
+# Custom debounce
+DEBOUNCE_TYPE = eager_pk
 
 # Custom RGB matrix handling
 RGB_MATRIX_ENABLE = custom
+RGB_MATRIX_CUSTOM_USER = yes
+RGB_MATRIX_CUSTOM_EFFECT_IMPLS = yes
 
 LAYOUTS = 65_ansi_blocker
