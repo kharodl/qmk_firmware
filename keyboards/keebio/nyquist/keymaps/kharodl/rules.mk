@@ -1,0 +1,7 @@
+RGBLIGHT_ENABLE = yes
+MOUSEKEY_ENABLE = no
+COMMAND_ENABLE = no
+
+DEBOUNCE_TYPE = eager_pk
+
+# EXTRAFLAGS += -flto

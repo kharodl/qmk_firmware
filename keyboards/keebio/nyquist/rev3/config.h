@@ -21,9 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xCB10
 #define PRODUCT_ID      0x1156
 #define DEVICE_VER      0x0300
-#define MANUFACTURER    Keebio
-#define PRODUCT         The Nyquist Keyboard
-#define DESCRIPTION     Split 60 percent ortholinear keyboard
+#define MANUFACTURER    Lovejit Kharod
+#define PRODUCT         Levinson Keyboard
+#define DESCRIPTION     Split 40 percent ortholinear keyboard
 
 /* key matrix size */
 // Rows are doubled-up
@@ -42,7 +42,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_HAS_GHOST
 
 /* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 8
 
 /* serial.c configuration for split keyboard */
 #define SOFT_SERIAL_PIN D0

@@ -30,7 +30,7 @@ FAUXCLICKY_ENABLE = no      # Use buzzer to emulate clicky switches
 HD44780_ENABLE = no         # Enable support for HD44780 based LCDs
 VIRTSER_ENABLE = no         # USB Serial Driver
 RAW_ENABLE = no             # Raw device
-AUTO_SHIFT_ENABLE = yes     # Auto Shift
+AUTO_SHIFT_ENABLE = no      # Auto Shift
 KEY_LOCK_ENABLE = yes       # Key lock
 
 # Custom debounce

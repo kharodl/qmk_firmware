@@ -22,9 +22,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [1] = LAYOUT_65_ansi_blocker(
         KC_CAPS, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_PSCR, KC_INS, \
-        KC_ASUP, RGB_SPD, RGB_VAI, RGB_SPI, RGB_HUI, RGB_SAI, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS, KC_PAUS, KC_MENU, KC_END, \
-        KC_ASDN, RGB_RMOD,RGB_VAD, RGB_MOD, RGB_HUD, RGB_SAD, _______, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS,          KC_LOCK, KC_VOLU, \
-        _______, RGB_TOG, KC_ASRP, KC_ASTG, _______, MD_BOOT, NK_TOGG, KC_0,    KC_1,    KC_2,    KC_3,    _______,          KC_MUTE, KC_VOLD, \
+        _______, RGB_SPD, RGB_VAI, RGB_SPI, RGB_HUI, RGB_SAI, _______, KC_SLSH, KC_7,    KC_8,    KC_9,    KC_MINS, KC_PAUS, KC_MENU, KC_END, \
+        _______, RGB_RMOD,RGB_VAD, RGB_MOD, RGB_HUD, RGB_SAD, _______, KC_ASTR, KC_4,    KC_5,    KC_6,    KC_PLUS,          KC_LOCK, KC_VOLU, \
+        _______, RGB_TOG, _______, _______, _______, MD_BOOT, NK_TOGG, KC_0,    KC_1,    KC_2,    KC_3,    _______,          KC_MUTE, KC_VOLD, \
         _______, _______, _______,                            _______,                            _______, _______, KC_MPRV, KC_MPLY, KC_MNXT  \
     ),
     /*
@@ -45,6 +45,22 @@ void matrix_init_user(void) {
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {
 };
+
+bool has_layer_changed = false;
+static uint8_t current_layer;
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch(get_highest_layer(state)) {
+        case 0:
+            rgblight_mode(RGB_MATRIX_CUSTOM_SOLID_COLOR_MULTI);
+            break;
+        case 1:
+            current_layer = rgblight_get_mode();
+            rgblight_mode(RGB_MATRIX_CUSTOM_SOLID_COLOR_MULTI_GLOW);
+            break;
+    }
+    return state;
+}
 
 #define MODS_SHIFT  (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
 #define MODS_CTRL  (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
@@ -118,6 +134,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                   break;
               }
             }
+            return false;
+        case RGB_MOD:
+            current_layer++;
+            return false;
+        case RGB_RMOD:
+            current_layer--;
             return false;
         default:
             return true; //Process all other keycodes normally
