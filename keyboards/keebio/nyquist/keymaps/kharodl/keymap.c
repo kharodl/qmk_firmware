@@ -25,7 +25,7 @@ enum planck_keycodes {
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
-#define SPR_ENT MEH(KC_ENT) // Super enter, ctrl+alt+shift on hold
+#define SPR_ENT MEH_T(KC_ENT) // Super enter, ctrl+alt+shift on hold
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
