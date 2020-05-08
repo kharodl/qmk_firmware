@@ -8,6 +8,7 @@ enum layer_names {
     _LOWER,
     _RAISE,
     _ADJUST,
+    _GUI
 };
 
 enum planck_keycodes {
@@ -19,13 +20,30 @@ enum planck_keycodes {
   EXT_PLV
 };
 
+
+#define LOWER   MO(_LOWER)
+#define RAISE   MO(_RAISE)
+#define GUI     MO(_GUI)
+#define SPR_ENT MEH_T(KC_ENT) // Super enter, ctrl+alt+shift on hold
+#define CTL_ESC LCTL_T(KC_ESC) // Super enter, ctrl+alt+shift on hold
+
 // Defines for task manager and such
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
 
-#define LOWER MO(_LOWER)
-#define RAISE MO(_RAISE)
-#define SPR_ENT MEH_T(KC_ENT) // Super enter, ctrl+alt+shift on hold
+// Window manager keys
+#define WM_FULL LALT(LGUI(KC_F))
+#define WM_NEXT LCTL(LALT(LGUI(KC_RGHT)))
+#define WM_PREV LCTL(LALT(LGUI(KC_LEFT)))
+#define WM_NW   LCTL(LGUI(KC_LEFT))
+#define WM_N    LALT(LGUI(KC_UP))
+#define WM_NE   LCTL(LGUI(KC_RGHT))
+#define WM_E    LALT(LGUI(KC_RGHT))
+#define WM_SE   S(LCTL(LGUI(KC_RGHT)))
+#define WM_S    LALT(LGUI(KC_DOWN))
+#define WM_SW   S(LCTL(LGUI(KC_LEFT)))
+#define WM_W    LALT(LGUI(KC_LEFT))
+#define WM_CNTR LALT(LGUI(KC_C))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -33,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
+ * |CtlEsc|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  '   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -42,16 +60,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+  CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  KC_LCTL, KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+  GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Colemak
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  '   |
+ * |CtlEsc|   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  '   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -60,16 +78,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_COLEMAK] = LAYOUT_ortho_4x12(
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
-    KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
+    CTL_ESC, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    KC_LCTL, KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+    GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Dvorak
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   '  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
+ * |CtlEsc|   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -78,9 +96,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_DVORAK] = LAYOUT_ortho_4x12(
     KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
-    KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
+    CTL_ESC, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
     KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_SFTENT,
-    KC_LCTL, KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+    GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Plover layer (http://opensteno.org)
@@ -114,8 +132,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ortho_4x12(
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  KC_ENT,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS, KC_EQL,
-  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), _______, KC_ASTR, KC_1,    KC_2,    KC_3,    KC_PLUS, _______,
+  KC_ENT,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_PGUP, KC_SLSH, KC_4,    KC_5,    KC_6,    KC_MINS, KC_EQL,
+  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), KC_PGDN, KC_ASTR, KC_1,    KC_2,    KC_3,    KC_PLUS, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT,  KC_INS,  KC_MENU
 ),
 
@@ -127,32 +145,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | Down |   -  |   =  |   {  |   }  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      | Play | Vol- | Mute | Vol+ |
+ * |      |      |      |      |      |      |      |      |   |  |   <  |   >  |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
   KC_GRV,  KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR,  KC_LPRN, KC_RPRN, KC_DEL,
   KC_F1,   KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UP,   KC_UNDS, KC_PLUS,  KC_LBRC, KC_RBRC, KC_BSLS,
   KC_F7,   KC_F8,    KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DOWN, KC_MINS, KC_EQL,   KC_LCBR, KC_RCBR, _______,
-  _______, _______,  _______, _______, _______, _______, _______, _______, KC_MPLY,  KC_VOLD, KC_MUTE, KC_VOLU
+  _______, _______,  _______, _______, _______, _______, _______, _______, KC_PIPE,  KC_LT,   KC_GT,   _______
 ),
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |RGBTOG|RGBRMO|RGBMOD|Qwerty|Colmk |Dvorak|Plover|caltde|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |RGBHUD|RGBHUI|      |      |      |      |AGnorm|
+ * |CapLck|      |      |      |      |RGBHUD|RGBHUI|      |      |      |      |AGnorm|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |RGBSAD|RGBSAI|      |      |      |      |AGswap|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |RGBVAD|RGBVAI|      |      |      |      | RESET|
+ * |      |      |      |      |      |RGBVAD|RGBVAI|      |      |      |NKTOGG| RESET|
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_ortho_4x12(
   _______, _______, _______, _______, RGB_TOG, RGB_RMOD, RGB_MOD, QWERTY,  COLEMAK, DVORAK,  PLOVER,  CALTDEL,
-  _______, _______, _______, _______, _______, RGB_HUD,  RGB_HUI, _______, _______, _______, _______, AG_NORM,
+  KC_CAPS, _______, _______, _______, _______, RGB_HUD,  RGB_HUI, _______, _______, _______, _______, AG_NORM,
   _______, _______, _______, _______, _______, RGB_SAD,  RGB_SAI, _______, _______, _______, _______, AG_SWAP,
-  _______, _______, _______, _______, _______, RGB_VAD,  RGB_VAI, _______, _______, _______, _______, RESET
+  _______, _______, _______, _______, _______, RGB_VAD,  RGB_VAI, _______, _______, _______, NK_TOGG, RESET
+),
+
+/* GUI
+ * ,-----------------------------------------------------------------------------------.
+ * |      | M B1 | M U  | M B2 | MW U |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      | M L  | M D  | M R  | MW D |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |CTRL-Z|CTRL-X|CTRL-C|CTRL-V|      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Prev | Play | Next |Brgt D|      |      |Brgt U| VolD | Mute | VolU | Sleep|
+ * `-----------------------------------------------------------------------------------'
+ */
+[_GUI] = LAYOUT_ortho_4x12(
+  _______, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, WM_PREV, WM_NW,   WM_N,    WM_NE,   _______,
+  _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, WM_FULL, WM_W,    WM_CNTR, WM_E,    _______,
+  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), _______, _______, WM_NEXT, WM_SW,   WM_S,    WM_SE,   _______,
+  _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_BRID, _______, _______, KC_BRIU, KC_VOLD, KC_MUTE, KC_VOLU, KC_SLEP
 )
 
 };

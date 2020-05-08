@@ -19,11 +19,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define USE_I2C
 
+// #define SPLIT_USB_DETECT
+// Detect (with timeout) USB connection when delegating master/slave
+// Default behavior for ARM
+// Required for AVR Teensy
+// #define SPLIT_USB_TIMEOUT 2000
+// Maximum timeout when detecting master/slave when using SPLIT_USB_DETECT
+// #define SPLIT_USB_TIMEOUT_POLL 10
+// Poll frequency when
+
 /* Select hand configuration */
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-// #define FORCE_NKRO
+#define FORCE_NKRO
 
 #define TAPPING_TERM 150
 
@@ -31,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 12
 #define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 8
+#define RGBLIGHT_SAT_STEP 16
 #define RGBLIGHT_VAL_STEP 8
 
 #define NO_ACTION_MACRO
