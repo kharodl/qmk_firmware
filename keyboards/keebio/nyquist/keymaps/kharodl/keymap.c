@@ -25,7 +25,7 @@ enum planck_keycodes {
 
 #define LOWER   MO(_LOWER)
 #define RAISE   MO(_RAISE)
-#define GUI     MO(_GUI)
+#define MEDIA   MO(_MEDIA)
 #define SPR_ENT MEH_T(KC_ENT) // Super enter, ctrl+alt+shift on hold
 #define CTL_ESC LCTL_T(KC_ESC) // control on hold, esc on tap
 
@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |RGBTOG|RGBRMO|RGBMOD|Qwerty|Colmk |Dvorak|Plover|caltde|
+ * |PlvExt|      |      |      |RGBTOG|RGBRMO|RGBMOD|Qwerty|Colmk |Dvorak|Plover|caltde|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |CapLck| Prev | Play | Next |Brgt D|RGBHUD|RGBHUI|Brgt U| VolD | Mute | VolU |AGnorm|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -169,7 +169,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_ortho_4x12(
-  _______, _______, _______, _______, RGB_TOG, RGB_RMOD, RGB_MOD, QWERTY,  COLEMAK, DVORAK,  PLOVER,  CALTDEL,
+  PLV_EXT, _______, _______, _______, RGB_TOG, RGB_RMOD, RGB_MOD, QWERTY,  COLEMAK, DVORAK,  PLOVER,  CALTDEL,
   KC_CAPS, KC_MPRV, KC_MPLY, KC_MNXT, KC_BRID, RGB_HUD,  RGB_HUI, KC_BRIU, KC_VOLD, KC_MUTE, KC_VOLU, AG_NORM,
   _______, _______, _______, _______, _______, RGB_SAD,  RGB_SAI, _______, _______, _______, _______, AG_SWAP,
   _______, _______, _______, _______, _______, RGB_VAD,  RGB_VAI, _______, _______, _______, NK_TOGG, RESET
@@ -179,8 +179,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void toggle_plover(void) {
   // Toggles plover application with PHROLG chord
-  SEND_STRING(SS_DOWN(X_P) SS_DOWN(X_H) SS_DOWN(X_R) SS_DOWN(X_O) SS_DOWN(X_L) SS_DOWN(X_G));
-  SEND_STRING(SS_UP(X_P) SS_UP(X_H) SS_UP(X_R) SS_UP(X_O) SS_UP(X_L) SS_UP(X_G));
+  SEND_STRING(SS_DOWN(X_E) SS_DOWN(X_R) SS_DOWN(X_F) SS_DOWN(X_V) SS_DOWN(X_O) SS_DOWN(X_L));
+  SEND_STRING(SS_UP(X_E) SS_UP(X_R) SS_UP(X_F) SS_UP(X_V) SS_UP(X_O) SS_UP(X_L));
 }
 
 void disable_plover(void) {
@@ -189,11 +189,11 @@ void disable_plover(void) {
 }
 
 void enable_plover(void) {
-  toggle_plover();
   layer_off(_RAISE);
   layer_off(_LOWER);
   layer_off(_ADJUST);
   layer_on(_PLOVER);
+  toggle_plover();
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -238,16 +238,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    // case PLV_CTL:
-    //   if (record->event.down) {
-    //     disable_plover();
-    //     SEND_STRING(SS_DOWN(X_LCTL));
-    //   } else if (record->event.up) {
-    //     SEND_STRING(SS_UP(X_LCTL));
-    //     enable_plover();
-    //   }
-    //   return false;
-    //   break;
+    case PLV_CTL:
+      if (record->event.pressed) {
+        disable_plover();
+        SEND_STRING(SS_DOWN(X_LCTL));
+      } else {
+        SEND_STRING(SS_UP(X_LCTL));
+        enable_plover();
+      }
+      return false;
+      break;
+    case PLV_STP:
+      if (record->event.pressed) {
+        disable_plover();
+      } else {
+        enable_plover();
+      }
+      return false;
+      break;
   }
   return true;
 }
