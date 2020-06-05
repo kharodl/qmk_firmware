@@ -8,7 +8,7 @@ enum layer_names {
     _LOWER,
     _RAISE,
     _ADJUST,
-    _GUI
+    _MEDIA
 };
 
 enum planck_keycodes {
@@ -17,7 +17,9 @@ enum planck_keycodes {
   DVORAK,
   PLOVER,
   BACKLIT,
-  EXT_PLV
+  PLV_EXT,
+  PLV_CTL,
+  PLV_STP
 };
 
 
@@ -25,15 +27,15 @@ enum planck_keycodes {
 #define RAISE   MO(_RAISE)
 #define GUI     MO(_GUI)
 #define SPR_ENT MEH_T(KC_ENT) // Super enter, ctrl+alt+shift on hold
-#define CTL_ESC LCTL_T(KC_ESC) // Super enter, ctrl+alt+shift on hold
+#define CTL_ESC LCTL_T(KC_ESC) // control on hold, esc on tap
 
 // Defines for task manager and such
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
 
 // Window manager keys
-#define WM_FULL LALT(LGUI(KC_F))
-#define WM_NEXT LCTL(LALT(LGUI(KC_RGHT)))
+#define WM_DTPB LALT(LGUI(KC_F))
+#define WM_DTPF LCTL(LALT(LGUI(KC_RGHT)))
 #define WM_PREV LCTL(LALT(LGUI(KC_LEFT)))
 #define WM_NW   LCTL(LGUI(KC_LEFT))
 #define WM_N    LALT(LGUI(KC_UP))
@@ -55,14 +57,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |  GUI | Alt  | Del  | Lower| Space|SEnter| Raise| Left |Right | Home | End  |
+ * | Super|  GUI | Alt  | Del  | Lower| Space| Enter| Raise| Left |Right | Home | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
   CTL_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-  GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+  KC_MEH,  KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Colemak
@@ -73,14 +75,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |  GUI | Alt  | Del  | Lower| Space|SEnter| Raise| Left |Right | Home | End  |
+ * | Super|  GUI | Alt  | Del  | Lower| Space| Enter| Raise| Left |Right | Home | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_COLEMAK] = LAYOUT_ortho_4x12(
     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC,
     CTL_ESC, KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_SFTENT,
-    GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+    KC_MEH,  KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Dvorak
@@ -91,14 +93,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |SftEnt|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Ctrl |  GUI | Alt  | Del  | Lower| Space|SEnter| Raise| Left |Right | Home | End  |
+ * | Super|  GUI | Alt  | Del  | Lower| Space| Enter| Raise| Left |Right | Home | End  |
  * `-----------------------------------------------------------------------------------'
  */
 [_DVORAK] = LAYOUT_ortho_4x12(
     KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_BSPC,
     CTL_ESC, KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH,
     KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_SFTENT,
-    GUI,     KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  SPR_ENT, RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
+    KC_MEH,  KC_LGUI, KC_LALT, KC_DEL,  LOWER,   KC_SPC,  KC_ENT,  RAISE,   KC_LEFT, KC_RGHT, KC_HOME, KC_END
 ),
 
 /* Plover layer (http://opensteno.org)
@@ -113,10 +115,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_PLOVER] = LAYOUT_ortho_4x12(
-    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   ,
-    _______, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
-    _______, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    EXT_PLV, _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, EXT_PLV
+    PLV_EXT, KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1
+    PLV_CTL, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,
+    PLV_STP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    PLV_EXT, _______, _______, KC_C,    KC_V,    _______, _______, KC_N,    KC_M,    _______, _______, PLV_EXT
 ),
 
 /* Lower
@@ -141,25 +143,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  Up  |   _  |   +  |   [  |   ]  |  \   |
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  Up  |   _  |   +  |   [  |   ]  |  \   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 | Down |   -  |   =  |   {  |   }  |      |
+ * |      |  F6  |  F7  |  F8  |  F9  |  F10 | Down |   -  |   =  |   {  |   }  |  |   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |   |  |   <  |   >  |      |
+ * |      |  F11 |      |  F12 |      |      |      |      |   |  |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
   KC_GRV,  KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR,  KC_LPRN, KC_RPRN, KC_DEL,
-  KC_F1,   KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UP,   KC_UNDS, KC_PLUS,  KC_LBRC, KC_RBRC, KC_BSLS,
-  KC_F7,   KC_F8,    KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DOWN, KC_MINS, KC_EQL,   KC_LCBR, KC_RCBR, _______,
-  _______, _______,  _______, _______, _______, _______, _______, _______, KC_PIPE,  KC_LT,   KC_GT,   _______
+  _______, KC_F1,   KC_F2,    KC_F3,   KC_F4,   KC_F5,   KC_UP,   KC_UNDS, KC_PLUS,  KC_LBRC, KC_RBRC, KC_BSLS,
+  _______, KC_F6,   KC_F7,    KC_F8,   KC_F9,   KC_F10,  KC_DOWN, KC_MINS, KC_EQL,   KC_LCBR, KC_RCBR, KC_PIPE,
+  _______, KC_F11,  _______,  KC_F12,  _______, _______, _______, _______, _______,  _______, _______, _______
 ),
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |RGBTOG|RGBRMO|RGBMOD|Qwerty|Colmk |Dvorak|Plover|caltde|
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |CapLck|      |      |      |      |RGBHUD|RGBHUI|      |      |      |      |AGnorm|
+ * |CapLck| Prev | Play | Next |Brgt D|RGBHUD|RGBHUI|Brgt U| VolD | Mute | VolU |AGnorm|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |RGBSAD|RGBSAI|      |      |      |      |AGswap|
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -168,30 +170,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_ADJUST] = LAYOUT_ortho_4x12(
   _______, _______, _______, _______, RGB_TOG, RGB_RMOD, RGB_MOD, QWERTY,  COLEMAK, DVORAK,  PLOVER,  CALTDEL,
-  KC_CAPS, _______, _______, _______, _______, RGB_HUD,  RGB_HUI, _______, _______, _______, _______, AG_NORM,
+  KC_CAPS, KC_MPRV, KC_MPLY, KC_MNXT, KC_BRID, RGB_HUD,  RGB_HUI, KC_BRIU, KC_VOLD, KC_MUTE, KC_VOLU, AG_NORM,
   _______, _______, _______, _______, _______, RGB_SAD,  RGB_SAI, _______, _______, _______, _______, AG_SWAP,
   _______, _______, _______, _______, _______, RGB_VAD,  RGB_VAI, _______, _______, _______, NK_TOGG, RESET
-),
-
-/* GUI
- * ,-----------------------------------------------------------------------------------.
- * |      | M B1 | M U  | M B2 | MW U |      |      |      |      |      |      |      |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      | M L  | M D  | M R  | MW D |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |CTRL-Z|CTRL-X|CTRL-C|CTRL-V|      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Prev | Play | Next |Brgt D|      |      |Brgt U| VolD | Mute | VolU | Sleep|
- * `-----------------------------------------------------------------------------------'
- */
-[_GUI] = LAYOUT_ortho_4x12(
-  _______, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, _______, _______, WM_PREV, WM_NW,   WM_N,    WM_NE,   _______,
-  _______, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D, _______, _______, WM_FULL, WM_W,    WM_CNTR, WM_E,    _______,
-  _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), _______, _______, WM_NEXT, WM_SW,   WM_S,    WM_SE,   _______,
-  _______, KC_MPRV, KC_MPLY, KC_MNXT, KC_BRID, _______, _______, KC_BRIU, KC_VOLD, KC_MUTE, KC_VOLU, KC_SLEP
 )
 
 };
+
+void toggle_plover(void) {
+  // Toggles plover application with PHROLG chord
+  SEND_STRING(SS_DOWN(X_P) SS_DOWN(X_H) SS_DOWN(X_R) SS_DOWN(X_O) SS_DOWN(X_L) SS_DOWN(X_G));
+  SEND_STRING(SS_UP(X_P) SS_UP(X_H) SS_UP(X_R) SS_UP(X_O) SS_UP(X_L) SS_UP(X_G));
+}
+
+void disable_plover(void) {
+  toggle_plover();
+  layer_off(_PLOVER);
+}
+
+void enable_plover(void) {
+  toggle_plover();
+  layer_off(_RAISE);
+  layer_off(_LOWER);
+  layer_off(_ADJUST);
+  layer_on(_PLOVER);
+}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
@@ -219,10 +222,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     case PLOVER:
       if (record->event.pressed) {
-        layer_off(_RAISE);
-        layer_off(_LOWER);
-        layer_off(_ADJUST);
-        layer_on(_PLOVER);
+        enable_plover();
         if (!eeconfig_is_enabled()) {
             eeconfig_init();
         }
@@ -232,12 +232,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
-    case EXT_PLV:
+    case PLV_EXT:
       if (record->event.pressed) {
-        layer_off(_PLOVER);
+        disable_plover();
       }
       return false;
       break;
+    // case PLV_CTL:
+    //   if (record->event.down) {
+    //     disable_plover();
+    //     SEND_STRING(SS_DOWN(X_LCTL));
+    //   } else if (record->event.up) {
+    //     SEND_STRING(SS_UP(X_LCTL));
+    //     enable_plover();
+    //   }
+    //   return false;
+    //   break;
   }
   return true;
 }

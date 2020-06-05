@@ -1,5 +1,8 @@
 /*
-Copyright 2017 Danny Nguyen <danny@hexwire.com>
+This is the c configuration file for the keymap
+
+Copyright 2012 Jun Wako <wakojun@gmail.com>
+Copyright 2015 Jack Humbert
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,34 +20,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define USE_I2C
+ // place overrides here
+#define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
+                              SONG(COLEMAK_SOUND), \
+                              SONG(DVORAK_SOUND) \
+                            }
 
-// #define SPLIT_USB_DETECT
-// Detect (with timeout) USB connection when delegating master/slave
-// Default behavior for ARM
-// Required for AVR Teensy
-// #define SPLIT_USB_TIMEOUT 2000
-// Maximum timeout when detecting master/slave when using SPLIT_USB_DETECT
-// #define SPLIT_USB_TIMEOUT_POLL 10
-// Poll frequency when
+/* Use I2C or Serial, not both */
+#define USE_SERIAL
+// #define USE_I2C
 
 /* Select hand configuration */
+#define MASTER_LEFT
 // #define MASTER_RIGHT
 // #define EE_HANDS
-
-#define FORCE_NKRO
-
-#define TAPPING_TERM 200
-
-#undef RGBLED_NUM
-#define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM 12
-#define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 16
-#define RGBLIGHT_VAL_STEP 8
-
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-#define NO_ACTION_ONESHOT
-
-#define NO_USB_STARTUP_CHECK
